@@ -238,7 +238,7 @@ def test_too_large_cv(cv: Any) -> None:
 
 @pytest.mark.parametrize("strategy", [*STRATEGIES])
 @pytest.mark.parametrize("dataset", [(X, y), (X_toy, y_toy)])
-@pytest.mark.parametrize("alpha", [0.2, [0.2, 0.4], (0.2, 0.4)])
+@pytest.mark.parametrize("alpha", [0.2, [0.2, 0.5], (0.2, 0.5)])
 def test_predict_output_shape(
     strategy: str, alpha: Any, dataset: Tuple[NDArray, NDArray]
 ) -> None:
