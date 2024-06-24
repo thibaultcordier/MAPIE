@@ -35,9 +35,17 @@ jobs:
         GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         SEARCH_QUERY: 'repo:scikit-learn-contrib/MAPIE is:issue created:${{ env.last_month }} -reason:"not planned"'
 
-    - name: Create issue
-      uses: peter-evans/create-issue-from-file@v4
+    #- name: Create issue
+      #uses: peter-evans/create-issue-from-file@v4
+      #with:
+      #  title: Monthly issue metrics report for opened issues and prs
+      #  token: ${{ secrets.GITHUB_TOKEN }}
+      #  content-filepath: ./issue_metrics.md
+
+    - name: Update issue comment
+      uses: peter-evans/create-or-update-comment@v4
       with:
-        title: Monthly issue metrics report for opened issues and prs
-        token: ${{ secrets.GITHUB_TOKEN }}
-        content-filepath: ./issue_metrics.md
+          issue-number: 11
+          token: ${{ secrets.GITHUB_TOKEN }}
+          body-path: ./issue_metrics.md
+      
