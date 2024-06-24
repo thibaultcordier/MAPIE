@@ -36,7 +36,7 @@ jobs:
       with:
           issue-number: 11
           token: ${{ secrets.GITHUB_TOKEN }}
-          body-path: ./issue_metrics_all.md
+          body-path: ./issue_metrics.md
 
     - name: Run issue metrics tool on ALL PRs
       id: pr-metrics-all
@@ -51,7 +51,7 @@ jobs:
       with:
           issue-number: 11
           token: ${{ secrets.GITHUB_TOKEN }}
-          body-path: ./pr_metrics_all.md
+          body-path: ./issue_metrics.md
 
     - name: Get dates for last month
       shell: bash
@@ -79,7 +79,7 @@ jobs:
       with:
           issue-number: 11
           token: ${{ secrets.GITHUB_TOKEN }}
-          body-path: ./issue_metrics_month.md
+          body-path: ./issue_metrics.md
 
     - name: Run issue metrics tool on PRs - last month
       id: pr-metrics-month
@@ -94,4 +94,4 @@ jobs:
       with:
           issue-number: 11
           token: ${{ secrets.GITHUB_TOKEN }}
-          body-path: ./pr_metrics_month.md
+          body-path: ./issue_metrics.md
