@@ -1,4 +1,4 @@
-name: Monthly issue metrics
+name: Monthly issue metrics (manually 2024)
 on:
   workflow_dispatch:
 
