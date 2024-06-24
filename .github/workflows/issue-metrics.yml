@@ -29,14 +29,11 @@ jobs:
         echo "last_month=$first_day..$last_day" >> "$GITHUB_ENV"
 
     - name: Run issue-metrics tool
+      id: issue-metrics
       uses: github/issue-metrics@v3
       env:
         GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         SEARCH_QUERY: 'repo:scikit-learn-contrib/MAPIE is:issue created:${{ env.last_month }} -reason:"not planned"'
 
-    - name: Create issue
-      uses: thibaultcordier/create-issue-from-file@v4
-      with:
-        title: Monthly issue metrics report
-        token: ${{ secrets.GITHUB_TOKEN }}
-        content-filepath: ./issue_metrics.md
+    - name: Print output of issue metrics tool
+      run: echo "${{ steps.issue-metrics.outputs.metrics }}"
