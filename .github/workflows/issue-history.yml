@@ -1,0 +1,46 @@
+name: History issue metrics (before 2024)
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    name: issue metrics
+    runs-on: ubuntu-latest
+    permissions:
+      issues: write
+      pull-requests: read
+
+    steps:
+
+    - name: Run issue metrics tool on ISSUES - before 2024
+      id: issue-metrics
+      uses: github/issue-metrics@v3
+      env:
+        GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        SEARCH_QUERY: 'repo:scikit-learn-contrib/MAPIE is:issue created:2021-01-01..2024-01-01'
+        HIDE_AUTHOR: true
+
+    - name: Update comment for ISSUES
+      uses: peter-evans/create-or-update-comment@v4
+      with:
+          issue-number: 11
+          token: ${{ secrets.GITHUB_TOKEN }}
+          body-path: ./issue_metrics.md
+
+    - name: Run issue metrics tool on PRs - before 2024
+      id: pr-metrics
+      uses: github/issue-metrics@v3
+      env:
+        GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        SEARCH_QUERY: 'repo:scikit-learn-contrib/MAPIE is:pr created:2021-01-01..2024-01-01'
+        HIDE_AUTHOR: true
+
+    - name: Update comment for PRs
+      uses: peter-evans/create-or-update-comment@v4
+      with:
+          issue-number: 11
+          token: ${{ secrets.GITHUB_TOKEN }}
+          body-path: ./issue_metrics.md
