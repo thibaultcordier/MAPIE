@@ -1,0 +1,145 @@
+name: Monthly issue metrics
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    name: issue metrics
+    runs-on: ubuntu-latest
+    permissions:
+      issues: write
+      pull-requests: read
+
+    steps:
+
+    - name: Get dates for current month
+      shell: bash
+      run: |
+        # Calculate the first day of the first month
+        first_day=2024-01-01
+
+        # Calculate the last day of the next month
+        last_day=$(date -d "$first_day +2 month -1 day" +%Y-%m-%d)
+
+        #Set an environment variable with the date range
+        echo "$first_day..$last_day"
+        echo "cur_month=$first_day..$last_day" >> "$GITHUB_ENV"
+
+    - name: Run issue metrics tool on ISSUES - 01-02
+      id: issue-metrics-month-01
+      uses: github/issue-metrics@v3
+      env:
+        GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        SEARCH_QUERY: 'repo:scikit-learn-contrib/MAPIE is:issue created:${{ env.cur_month }}'
+        HIDE_AUTHOR: true
+
+    - name: Update comment for ISSUES - 01-02
+      uses: peter-evans/create-or-update-comment@v4
+      with:
+          issue-number: 11
+          token: ${{ secrets.GITHUB_TOKEN }}
+          body-path: ./issue_metrics.md
+
+    - name: Run issue metrics tool on PRs - 01-02
+      id: pr-metrics-month-01
+      uses: github/issue-metrics@v3
+      env:
+        GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        SEARCH_QUERY: 'repo:scikit-learn-contrib/MAPIE is:pr created:${{ env.cur_month }}'
+        HIDE_AUTHOR: true
+
+    - name: Update comment for PRs - 01-02
+      uses: peter-evans/create-or-update-comment@v4
+      with:
+          issue-number: 11
+          token: ${{ secrets.GITHUB_TOKEN }}
+          body-path: ./issue_metrics.md
+
+    - name: Get dates for current month
+      shell: bash
+      run: |
+        # Calculate the first day of the first month
+        first_day=2024-03-01
+
+        # Calculate the last day of the next month
+        last_day=$(date -d "$first_day +2 month -1 day" +%Y-%m-%d)
+
+        #Set an environment variable with the date range
+        echo "$first_day..$last_day"
+        echo "cur_month=$first_day..$last_day" >> "$GITHUB_ENV"
+
+    - name: Run issue metrics tool on ISSUES - 03-04
+      id: issue-metrics-month-03
+      uses: github/issue-metrics@v3
+      env:
+        GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        SEARCH_QUERY: 'repo:scikit-learn-contrib/MAPIE is:issue created:${{ env.cur_month }}'
+        HIDE_AUTHOR: true
+
+    - name: Update comment for ISSUES - 03-04
+      uses: peter-evans/create-or-update-comment@v4
+      with:
+          issue-number: 11
+          token: ${{ secrets.GITHUB_TOKEN }}
+          body-path: ./issue_metrics.md
+
+    - name: Run issue metrics tool on PRs - 03-04
+      id: pr-metrics-month-03
+      uses: github/issue-metrics@v3
+      env:
+        GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        SEARCH_QUERY: 'repo:scikit-learn-contrib/MAPIE is:pr created:${{ env.cur_month }}'
+        HIDE_AUTHOR: true
+
+    - name: Update comment for PRs - 03-04
+      uses: peter-evans/create-or-update-comment@v4
+      with:
+          issue-number: 11
+          token: ${{ secrets.GITHUB_TOKEN }}
+          body-path: ./issue_metrics.md
+
+    - name: Get dates for current month
+      shell: bash
+      run: |
+        # Calculate the first day of the first month
+        first_day=2024-05-01
+
+        # Calculate the last day of the next month
+        last_day=$(date -d "$first_day +2 month -1 day" +%Y-%m-%d)
+
+        #Set an environment variable with the date range
+        echo "$first_day..$last_day"
+        echo "cur_month=$first_day..$last_day" >> "$GITHUB_ENV"
+
+    - name: Run issue metrics tool on ISSUES - 05-06
+      id: issue-metrics-month-05
+      uses: github/issue-metrics@v3
+      env:
+        GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        SEARCH_QUERY: 'repo:scikit-learn-contrib/MAPIE is:issue created:${{ env.cur_month }}'
+        HIDE_AUTHOR: true
+
+    - name: Update comment for ISSUES - 05-06
+      uses: peter-evans/create-or-update-comment@v4
+      with:
+          issue-number: 11
+          token: ${{ secrets.GITHUB_TOKEN }}
+          body-path: ./issue_metrics.md
+
+    - name: Run issue metrics tool on PRs - 05-06
+      id: pr-metrics-month-05
+      uses: github/issue-metrics@v3
+      env:
+        GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        SEARCH_QUERY: 'repo:scikit-learn-contrib/MAPIE is:pr created:${{ env.cur_month }}'
+        HIDE_AUTHOR: true
+
+    - name: Update comment for PRs - 05-06
+      uses: peter-evans/create-or-update-comment@v4
+      with:
+          issue-number: 11
+          token: ${{ secrets.GITHUB_TOKEN }}
+          body-path: ./issue_metrics.md
