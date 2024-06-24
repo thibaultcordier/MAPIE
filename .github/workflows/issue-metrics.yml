@@ -15,6 +15,44 @@ jobs:
 
     steps:
 
+    
+    - name: Run issue metrics tool on ALL ISSUES
+      id: issue-metrics-all
+      uses: github/issue-metrics@v3
+      env:
+        GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        SEARCH_QUERY: 'repo:scikit-learn-contrib/MAPIE is:issue'
+        HIDE_AUTHOR: true
+
+  #- name: Create issue
+      #uses: peter-evans/create-issue-from-file@v4
+      #with:
+      #  title: Monthly issue metrics report for opened issues and prs
+      #  token: ${{ secrets.GITHUB_TOKEN }}
+      #  content-filepath: ./issue_metrics.md
+
+    - name: Update comment for ALL ISSUES
+      uses: peter-evans/create-or-update-comment@v4
+      with:
+          issue-number: 11
+          token: ${{ secrets.GITHUB_TOKEN }}
+          body-path: ./issue_metrics_all.md
+
+    - name: Run issue metrics tool on ALL PRs
+      id: pr-metrics-all
+      uses: github/issue-metrics@v3
+      env:
+        GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        SEARCH_QUERY: 'repo:scikit-learn-contrib/MAPIE is:pr'
+        HIDE_AUTHOR: true
+
+    - name: Update comment for ALL PRs
+      uses: peter-evans/create-or-update-comment@v4
+      with:
+          issue-number: 11
+          token: ${{ secrets.GITHUB_TOKEN }}
+          body-path: ./pr_metrics_all.md
+
     - name: Get dates for last month
       shell: bash
       run: |
@@ -28,24 +66,32 @@ jobs:
         echo "$first_day..$last_day"
         echo "last_month=$first_day..$last_day" >> "$GITHUB_ENV"
 
-    - name: Run issue-metrics tool
-      id: issue-metrics
+    - name: Run issue metrics tool on ISSUES - last month
+      id: issue-metrics-month
       uses: github/issue-metrics@v3
       env:
         GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        SEARCH_QUERY: 'repo:scikit-learn-contrib/MAPIE is:issue created:${{ env.last_month }} -reason:"not planned"'
+        SEARCH_QUERY: 'repo:scikit-learn-contrib/MAPIE is:issue created:${{ env.last_month }}'
+        HIDE_AUTHOR: true
 
-    #- name: Create issue
-      #uses: peter-evans/create-issue-from-file@v4
-      #with:
-      #  title: Monthly issue metrics report for opened issues and prs
-      #  token: ${{ secrets.GITHUB_TOKEN }}
-      #  content-filepath: ./issue_metrics.md
-
-    - name: Update issue comment
+    - name: Update comment for ISSUES - last month
       uses: peter-evans/create-or-update-comment@v4
       with:
           issue-number: 11
           token: ${{ secrets.GITHUB_TOKEN }}
-          body-path: ./issue_metrics.md
-      
+          body-path: ./issue_metrics_month.md
+
+    - name: Run issue metrics tool on PRs - last month
+      id: pr-metrics-month
+      uses: github/issue-metrics@v3
+      env:
+        GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        SEARCH_QUERY: 'repo:scikit-learn-contrib/MAPIE is:pr created:${{ env.last_month }}'
+        HIDE_AUTHOR: true
+
+    - name: Update comment for PRs - last month
+      uses: peter-evans/create-or-update-comment@v4
+      with:
+          issue-number: 11
+          token: ${{ secrets.GITHUB_TOKEN }}
+          body-path: ./pr_metrics_month.md
